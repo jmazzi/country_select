@@ -23,6 +23,8 @@ module ActionView
           selected=nil if priority_countries.include?(selected)
         end
 
+        country_options = country_options.html_safe if country_options.respond_to?(:html_safe)
+
         return country_options + options_for_select(COUNTRIES, selected)
       end
       # All the countries included in the country_options output.
@@ -64,7 +66,7 @@ module ActionView
         "Viet Nam", "Virgin Islands, British", "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara",
         "Yemen", "Zambia", "Zimbabwe"] unless const_defined?("COUNTRIES")
     end
-    
+
     class InstanceTag
       def to_country_select_tag(priority_countries, options, html_options)
         html_options = html_options.stringify_keys
@@ -78,7 +80,7 @@ module ActionView
         )
       end
     end
-    
+
     class FormBuilder
       def country_select(method, priority_countries = nil, options = {}, html_options = {})
         @template.country_select(@object_name, method, priority_countries, options.merge(:object => @object), html_options)
